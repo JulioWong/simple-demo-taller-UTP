@@ -43,7 +43,7 @@ pipeline {
                 git config --global user.name JulioWong
                 """
                 
-                configFileProvider([configFile(fileId: 'acaf626e-bcad-47c2-9ac8-66e73f40f3ce', variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: 'eedea724-dd30-4533-ba33-d88364c185e4', variable: 'MAVEN_SETTINGS')]) {
                     // sh 'mvn clean package -DskipTests=true -s $MAVEN_SETTINGS deploy:deploy'
                     sh 'mvn -DskipTests=true -s $MAVEN_SETTINGS --batch-mode release:clean release:prepare release:perform'
                 }
