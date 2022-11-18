@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             steps {
-                configFileProvider([configFile(fileId: 'acaf626e-bcad-47c2-9ac8-66e73f40f3ce', variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: 'eedea724-dd30-4533-ba33-d88364c185e4', variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS clean test'
                 }
             }
