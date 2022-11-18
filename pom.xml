@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.utp.taller</groupId>
+	<artifactId>simple-demo-taller-UTP</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>simple-demo-taller-UTP</name>
+	<description>Backend Simple Demo for Taller UTP</description>
+	
+	<properties>
+		<java.version>11</java.version>
+		<project.scm.id>my-scm-server</project.scm.id>
+	</properties>
+	
+	
+	<scm>
+		<connection>scm:git:ssh://git@github.com/JulioWong/simple-demo-taller-UTP.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/JulioWong/simple-demo-taller-UTP.git</developerConnection>
+		<url>https://github.com/JulioWong/simple-demo-taller-UTP</url>
+		<tag>v0.0.1</tag>
+	</scm>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<url>http://172.20.0.8:8081/artifactory/usa1-release/</url>
+		</repository>
+		<snapshotRepository>
+			<id>central</id>
+			<name>Snapshot Repository</name>
+			<url>http://172.20.0.8:8081/artifactory/usa1-snapshot/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M4</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
