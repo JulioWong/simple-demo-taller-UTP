@@ -14,7 +14,7 @@ pipeline {
                 }
             }
         }
-        /*stage('Static Analysis') {
+        stage('Static Analysis') {
             agent {
                 docker {
                     image 'maven:3.8.5-jdk-11'
@@ -22,8 +22,8 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([string(credentialsId: 'sonar_login', variable: 'SECRET')]) {
-                    sh 'mvn sonar:sonar -Dsonar.host.url=http://54.221.111.186:9000 -Dsonar.login=$SECRET -Dsonar.projectKey=Test1'
+                withCredentials([string(credentialsId: 'SonarQube', variable: 'SECRET')]) {
+                    sh 'mvn sonar:sonar -Dsonar.host.url=http://54.221.111.186:9000 -Dsonar.login=$SECRET -Dsonar.projectKey=Taller-de-Investigacion-UTP'
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
                     env.NEW_VERSION = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim().substring(1)
                 }
             }
-        }*/
+        }
         /*stage('Build Docker Image') {
             agent any
             environment {
