@@ -1,0 +1,110 @@
+pipeline {
+    agent none
+    stages {
+        stage('Unit Testing') { 
+            agent {
+                docker {
+                    image 'maven:3.8.5-jdk-11'
+                    args '-v /root/.m2:/root/.m2 -v'
+                }
+            }
+            steps {
+                configFileProvider([configFile(fileId: 'acaf626e-bcad-47c2-9ac8-66e73f40f3ce', variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn -s $MAVEN_SETTINGS clean test'
+                }
+            }
+        }
+        stage('Static Analysis') {
+            agent {
+                docker {
+                    image 'maven:3.8.5-jdk-11'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+            steps {
+                withCredentials([string(credentialsId: 'sonar_login', variable: 'SECRET')]) {
+                    sh 'mvn sonar:sonar -Dsonar.host.url=http://54.221.111.186:9000 -Dsonar.login=$SECRET -Dsonar.projectKey=Test1'
+                }
+            }
+        }
+        stage('Build Artifact') {
+            agent {
+                docker {
+                    image 'maven:3.8.5-jdk-11'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+            environment {
+                GIT_SSH_COMMAND = "ssh -o StrictHostKeyChecking=no"
+            }
+            steps {
+                sh """
+                git config --global user.email julioo.wong@gmail.com
+                git config --global user.name JulioWong
+                """
+                
+                configFileProvider([configFile(fileId: 'acaf626e-bcad-47c2-9ac8-66e73f40f3ce', variable: 'MAVEN_SETTINGS')]) {
+                    // sh 'mvn clean package -DskipTests=true -s $MAVEN_SETTINGS deploy:deploy'
+                    sh 'mvn -DskipTests=true -s $MAVEN_SETTINGS --batch-mode release:clean release:prepare release:perform'
+                }
+            }
+        }
+        stage("Get New version") {
+            agent any
+            steps{
+                script {
+                    env.NEW_VERSION = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim().substring(1)
+                }
+            }
+        }
+        /*stage('Build Docker Image') {
+            agent any
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('AccessKeyID')
+                AWS_SECRET_ACCESS_KEY = credentials('SecretAccessKey')
+                JENKINS_USER = credentials('jenkins_admin_username')
+                JENKINS_PASSWORD = credentials('jenkins_admin_password')
+            }
+            steps {
+                sh """
+                aws configure set region us-east-1
+                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 235274383227.dkr.ecr.us-east-1.amazonaws.com
+                curl -u ${JENKINS_USER}:${JENKINS_PASSWORD} -X GET http://52.23.223.224:8081/artifactory/taller-release/com/bcp/desafio_tecnico/${NEW_VERSION}/desafio_tecnico-${NEW_VERSION}.jar -o deploy.jar
+                
+                echo 'FROM openjdk:11-slim
+                VOLUME /tmp 
+                ARG JAR_FILE 
+                COPY deploy.jar app.jar
+                EXPOSE 8040
+                ENTRYPOINT ["java", "-jar", "/app.jar"]' > Dockerfile
+
+                docker build -t taller-investigacion .
+
+                docker tag taller-investigacion:latest 235274383227.dkr.ecr.us-east-1.amazonaws.com/taller-investigacion:${NEW_VERSION}
+
+                docker push 235274383227.dkr.ecr.us-east-1.amazonaws.com/taller-investigacion:${NEW_VERSION}
+                """
+            }
+        }
+        stage('Delivery to AWS') {
+            agent any
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('AccessKeyID')
+                AWS_SECRET_ACCESS_KEY = credentials('SecretAccessKey')
+            }
+            steps {
+                
+                sh """
+                aws configure set region us-east-1
+                aws eks update-kubeconfig --name eksUTP --region us-east-1
+
+                aws s3api get-object --bucket taller-utp-kubernetes --key k8s_manifest_taller_utp.yml k8s_manifest_taller_utp.yml
+
+                sed -i 's/<version>/${NEW_VERSION}/' k8s_manifest_taller_utp.yml
+
+                kubectl apply -f k8s_manifest_taller_utp.yml
+                """       
+            }
+        }*/
+    }
+}
