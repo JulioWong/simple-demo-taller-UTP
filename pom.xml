@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.utp.taller</groupId>
 	<artifactId>simple-demo-taller-UTP</artifactId>
-	<version>0.0.17-SNAPSHOT</version>
+	<version>0.0.18-SNAPSHOT</version>
 	<name>simple-demo-taller-UTP</name>
 	<description>Backend Simple Demo for Taller UTP</description>
 	
