@@ -57,19 +57,19 @@ pipeline {
                 }
             }
         }
-        /*stage('Build Docker Image') {
+        stage('Build Docker Image') {
             agent any
             environment {
-                AWS_ACCESS_KEY_ID = credentials('AccessKeyID')
-                AWS_SECRET_ACCESS_KEY = credentials('SecretAccessKey')
-                JENKINS_USER = credentials('jenkins_admin_username')
-                JENKINS_PASSWORD = credentials('jenkins_admin_password')
+                AWS_ACCESS_KEY_ID = credentials('AWSAccessKeyID')
+                AWS_SECRET_ACCESS_KEY = credentials('AWSSecretAccessKey')
+                ARTIFACTORY_USER = credentials('Artifactory_username')
+                ARTIFACTORY_PASSWORD = credentials('Artifactory_password')
             }
             steps {
                 sh """
                 aws configure set region us-east-1
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 235274383227.dkr.ecr.us-east-1.amazonaws.com
-                curl -u ${JENKINS_USER}:${JENKINS_PASSWORD} -X GET http://52.23.223.224:8081/artifactory/taller-release/com/bcp/desafio_tecnico/${NEW_VERSION}/desafio_tecnico-${NEW_VERSION}.jar -o deploy.jar
+                curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} -X GET http://52.23.223.224:8081/artifactory/taller-release/com/bcp/desafio_tecnico/${NEW_VERSION}/desafio_tecnico-${NEW_VERSION}.jar -o deploy.jar
                 
                 echo 'FROM openjdk:11-slim
                 VOLUME /tmp 
@@ -86,7 +86,7 @@ pipeline {
                 """
             }
         }
-        stage('Delivery to AWS') {
+        /*stage('Delivery to AWS') {
             agent any
             environment {
                 AWS_ACCESS_KEY_ID = credentials('AccessKeyID')
