@@ -9,6 +9,6 @@ public class FooTest {
 	@Test
     public void validateSizeMap() {
 		Bar bar = new BarImpl();
-		assertEquals(3, bar.getResult().size());
+		assertEquals(4, bar.getResult().size());
     }
 }
