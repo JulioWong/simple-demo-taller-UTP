@@ -96,7 +96,7 @@ pipeline {
                 
                 sh """
                 aws configure set region us-east-1
-                aws eks update-kubeconfig --name eksUTP --region us-east-1
+                aws eks update-kubeconfig --name k8sTallerUTP --region us-east-1
 
                 aws s3api get-object --bucket taller-utp-kubernetes --key k8s_manifest_taller_utp.yml k8s_manifest_taller_utp.yml
 
