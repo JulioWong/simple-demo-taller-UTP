@@ -86,11 +86,11 @@ pipeline {
                 """
             }
         }
-        /*stage('Delivery to AWS') {
+        stage('Delivery to AWS') {
             agent any
             environment {
-                AWS_ACCESS_KEY_ID = credentials('AccessKeyID')
-                AWS_SECRET_ACCESS_KEY = credentials('SecretAccessKey')
+                AWS_ACCESS_KEY_ID = credentials('AWSAccessKeyID')
+                AWS_SECRET_ACCESS_KEY = credentials('AWSSecretAccessKey')
             }
             steps {
                 
@@ -105,6 +105,6 @@ pipeline {
                 kubectl apply -f k8s_manifest_taller_utp.yml
                 """       
             }
-        }*/
+        }
     }
 }
