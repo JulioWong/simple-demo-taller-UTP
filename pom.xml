@@ -50,12 +50,12 @@
 	<distributionManagement>
 		<repository>
 			<id>central</id>
-			<url>http://52.23.223.224:8081/artifactory/taller-release/</url>
+			<url>http://54.234.111.40:8081/artifactory/taller-release/</url>
 		</repository>
 		<snapshotRepository>
 			<id>central</id>
 			<name>Snapshot Repository</name>
-			<url>http://52.23.223.224:8081/artifactory/taller-snapshot/</url>
+			<url>http://54.234.111.40:8081/artifactory/taller-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
