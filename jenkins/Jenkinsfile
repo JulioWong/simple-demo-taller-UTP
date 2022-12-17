@@ -57,7 +57,6 @@ pipeline {
                 }
             }
         }
-        /*
         stage('Build Docker Image') {
             agent any
             environment {
@@ -70,7 +69,7 @@ pipeline {
                 sh """
                 aws configure set region us-east-1
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 235274383227.dkr.ecr.us-east-1.amazonaws.com
-                curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} -X GET http://54.234.111.40:8081/artifactory/taller-release/com/utp/taller/simple-demo-taller-UTP/${NEW_VERSION}/simple-demo-taller-UTP-${NEW_VERSION}.jar -o deploy.jar
+                curl -u ${ARTIFACTORY_USER}:${ARTIFACTORY_PASSWORD} -X GET http://54.234.111.40:8081/artifactory/utp-release/com/utp/taller/simple-demo-taller-UTP/${NEW_VERSION}/simple-demo-taller-UTP-${NEW_VERSION}.jar -o deploy.jar
                 
                 echo 'FROM openjdk:11-slim
                 VOLUME /tmp 
@@ -107,6 +106,5 @@ pipeline {
                 """       
             }
         }
-        */
     }
 }
