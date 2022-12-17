@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             steps {
-                configFileProvider([configFile(fileId: 'eedea724-dd30-4533-ba33-d88364c185e4', variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: 'SettingMaven', variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS clean test'
                 }
             }
@@ -43,7 +43,7 @@ pipeline {
                 git config --global user.name JulioWong
                 """
                 
-                configFileProvider([configFile(fileId: 'eedea724-dd30-4533-ba33-d88364c185e4', variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: 'SettingMaven', variable: 'MAVEN_SETTINGS')]) {
                     // sh 'mvn clean package -DskipTests=true -s $MAVEN_SETTINGS deploy:deploy'
                     sh 'mvn -DskipTests=true -s $MAVEN_SETTINGS --batch-mode release:clean release:prepare release:perform'
                 }
@@ -57,6 +57,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Build Docker Image') {
             agent any
             environment {
@@ -96,7 +97,7 @@ pipeline {
                 
                 sh """
                 aws configure set region us-east-1
-                aws eks update-kubeconfig --name k8sTallerUTP --region us-east-1
+                aws eks update-kubeconfig --name clusterDemoTallerUTP --region us-east-1
 
                 aws s3api get-object --bucket taller-utp-kubernetes --key k8s_manifest_taller_utp.yml k8s_manifest_taller_utp.yml
 
@@ -106,5 +107,6 @@ pipeline {
                 """       
             }
         }
+        */
     }
 }
