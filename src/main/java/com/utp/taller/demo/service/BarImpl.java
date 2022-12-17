@@ -15,7 +15,7 @@ public class BarImpl implements Bar {
 		result.put("Key4", "Bar");
 		result.put("Key3", "Foo");
 		result.put("Key2", "Hello World");
-		result.put("Key1", "Demo Taller UTP");
+		result.put("Key1", "Demo Taller UTP 123");
 		return result;
 	}
 }
