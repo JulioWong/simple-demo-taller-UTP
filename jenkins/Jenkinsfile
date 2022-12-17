@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Unit Testing') { 
+        /*stage('Unit Testing') { 
             agent {
                 docker {
                     image 'maven:3.8.5-jdk-11'
@@ -26,7 +26,7 @@ pipeline {
                     sh 'mvn sonar:sonar -Dsonar.host.url=http://18.212.98.100:9000 -Dsonar.login=$SECRET -Dsonar.projectKey=Taller-de-Investigacion-UTP'
                 }
             }
-        }
+        }*/
         stage('Build Artifact') {
             agent {
                 docker {
