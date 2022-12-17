@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.utp.taller</groupId>
 	<artifactId>simple-demo-taller-UTP</artifactId>
-	<version>0.0.23-SNAPSHOT</version>
+	<version>0.0.23</version>
 	<name>simple-demo-taller-UTP</name>
 	<description>Backend Simple Demo for Taller UTP</description>
 	
@@ -23,7 +23,7 @@
 		<connection>scm:git:ssh://git@github.com/JulioWong/simple-demo-taller-UTP.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/JulioWong/simple-demo-taller-UTP.git</developerConnection>
 		<url>https://github.com/JulioWong/simple-demo-taller-UTP</url>
-		<tag>v0.0.1</tag>
+		<tag>v0.0.23</tag>
 	</scm>
 	
 	<dependencies>
